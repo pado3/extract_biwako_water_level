@@ -2,6 +2,7 @@
 bl.py
 Biwako Level: store water level data log of Biwako from MILT Japan system
 by @pado3@fedibird.com
+2026/04/25 r1.1 correct logical error, make data folder is not exist
 2026/03/22 r1.0 initial release
 '''
 import requests
@@ -67,9 +68,14 @@ def check_date(str_date: str):
     else:
         if int(str_date[0:4]) < int(YYYY_min):
             abort('specified year is before the first data, 199312.')
-        if int(str_date[4:]) < Month_min | Month_max < int(str_date[4:]):
+        if int(str_date[4:]) < Month_min or Month_max < int(str_date[4:]):
             abort('specified month is not in 01-12.')
     return int(str_date)
+
+
+def check_dir():
+    '''make data folder if not exist
+    os.makedirs('_bl_data', exist_ok=True)
 
 
 def check_args(args):
@@ -90,6 +96,7 @@ def check_args(args):
 def bl_body(args):
     '''control download loop'''
     (sta, fin) = check_args(args)
+    check_dir()
     sta_year = int(sta/100)
     sta_month = sta - 100*sta_year
     fin_year = int(fin/100)

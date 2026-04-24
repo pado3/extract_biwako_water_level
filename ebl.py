@@ -3,6 +3,7 @@
 ebl.py
 Extract the Biwako Level data of specified date from downloaded by bl.py
 by @pado3@fedibird.com
+2026/04/25 r1.1 correct logical error
 2026/03/22 r1.0 initial release
 '''
 import os
@@ -60,9 +61,9 @@ def check_date(str_date: str):
     if len(str_date) != 4:  # is not MMDD
         abort('specified date [{}] is not in 4 char[MMDD].'.format(str_date))
     else:
-        if int(str_date[:2]) < Month_min | Month_max < int(str_date[:2]):
+        if int(str_date[:2]) < Month_min or Month_max < int(str_date[:2]):
             abort('specified month is not {}-{}.'.format(Month_min, Month_max))
-        if int(str_date[2:]) < Day_min | Day_max < int(str_date[2:]):
+        if int(str_date[2:]) < Day_min or Day_max < int(str_date[2:]):
             abort('specified day is not {}-{}.'.format(Day_min, Day_max))
             # "small month" will treat at the datetime coonversion
     return int(str_date)
@@ -72,7 +73,7 @@ def check_hour(str_hour: str):
     '''confirm args hour value, return HH in int'''
     try:
         hour = int(str_hour)
-        if hour < Hour_min | Hour_max < hour:
+        if hour < Hour_min or Hour_max < hour:
             abort('specified hour is not in 1-24. (cannot use 0)')
     except Exception:
         abort('please input hour in HH, your value: [{}].'.format(str_hour))
