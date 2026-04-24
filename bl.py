@@ -74,7 +74,8 @@ def check_date(str_date: str):
 
 
 def check_dir():
-    '''make data folder if not exist
+    '''make data folder if not exist'''
+    import os
     os.makedirs('_bl_data', exist_ok=True)
 
 
